@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-nginx-replicaset
+  labels:
+    app.kuberneted.io/name: my-nginx-pod
+    env: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kuberneted.io/name: my-nginx-pod
+      env: dev
+  template:
+    metadata:
+      labels:
+        app.kuberneted.io/name: my-nginx-pod
+        env: dev
+    spec:
+      containers:
+        - name: my-nginx-container
+          image: nginx
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 80
